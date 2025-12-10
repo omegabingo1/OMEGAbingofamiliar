@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OMEGA Bingo - Panel Oficial</title>
+    <title>OMEGA Bingo - Salas de Bingo Online Profesional</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
     <script>
-        // 🚨 TU CONFIGURACIÓN DE FIREBASE 🚨
         const firebaseConfig = {
             apiKey: "AIzaSyCwrGuhYZkfnH-Yva8CwaEMfEYhzCByrRA",
             authDomain: "omegareserva369-34542.firebaseapp.com",
@@ -29,74 +28,325 @@
     </script>
     
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #2e004f 0%, #6b00b6 100%);
-            background-size: 400% 400%;
-            animation: gradient-flow 15s ease infinite;
-            overflow-x: hidden;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            min-height: 100vh;
         }
-        @keyframes gradient-flow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         
-        .bingo-card-image { max-width: 100%; height: auto; border-radius: 0.75rem; border: 4px solid #800080; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
-        #footer-logo { max-width: 150px; height: auto; cursor: pointer; transition: transform 0.1s; }
-        #footer-logo:active { transform: scale(0.9); }
-
-        /* Modal Generico */
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 1000; overflow-y: auto; padding: 20px 0; }
-        .modal-content { background-color: white; border-radius: 1rem; padding: 1.5rem; width: 90%; max-width: 500px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); position: relative; }
+        /* Header Profesional */
+        .main-header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
         
-        /* Modal Legal */
-        .modal-legal-content { background-color: white; border-radius: 1rem; padding: 1.5rem; width: 95%; max-width: 800px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); position: relative; max-height: 90vh; }
-        .modal-legal-body { overflow-y: auto; max-height: 70vh; padding: 1rem 0;}
-
-        /* Modal Cerrado (Estilo especial JUEGO) */
+        .nav-link {
+            padding: 0.75rem 1.5rem;
+            color: #e0e0e0;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .nav-link:hover {
+            color: #fcd34d;
+            border-bottom-color: #fcd34d;
+        }
+        
+        /* Salas de Bingo */
+        .sala-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f3f4f6 100%);
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+        
+        .sala-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        .sala-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: linear-gradient(135deg, #fcd34d 0%, #f59e0b 100%);
+            color: #1f2937;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 900;
+            font-size: 0.875rem;
+            box-shadow: 0 4px 10px rgba(252, 211, 77, 0.4);
+            z-index: 2;
+        }
+        
+        .bote-amount {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Sección Hero */
+        .hero-section {
+            background: linear-gradient(135deg, #6b21a8 0%, #9333ea 50%, #c026d3 100%);
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        /* Botones Premium */
+        .btn-premium {
+            background: linear-gradient(135deg, #fcd34d 0%, #f59e0b 100%);
+            color: #1f2937;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            box-shadow: 0 6px 20px rgba(252, 211, 77, 0.4);
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-premium:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(252, 211, 77, 0.6);
+        }
+        
+        /* Tablas de Bingo */
+        .bingo-card-image { 
+            max-width: 100%; 
+            height: auto; 
+            border-radius: 0.75rem; 
+            border: 4px solid #800080; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4); 
+        }
+        
+        /* Modal */
+        .modal { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0,0,0,0.85); 
+            display: none; 
+            justify-content: center; 
+            align-items: center; 
+            z-index: 1000; 
+            overflow-y: auto; 
+            padding: 20px 0; 
+        }
+        
+        .modal-content { 
+            background-color: white; 
+            border-radius: 1rem; 
+            padding: 1.5rem; 
+            width: 90%; 
+            max-width: 500px; 
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); 
+            position: relative; 
+        }
+        
+        .modal-legal-content { 
+            background-color: white; 
+            border-radius: 1rem; 
+            padding: 1.5rem; 
+            width: 95%; 
+            max-width: 800px; 
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); 
+            position: relative; 
+            max-height: 90vh; 
+        }
+        
+        .modal-legal-body { 
+            overflow-y: auto; 
+            max-height: 70vh; 
+            padding: 1rem 0;
+        }
+        
+        /* Overlay de Juego Cerrado */
         .closed-overlay { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background-color: white; /* FONDO BLANCO PARA EL JUEGO */
-            display: none; flex-direction: column; justify-content: center; align-items: center; 
-            z-index: 9999; text-align: center; color: #1f2937;
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-color: white;
+            display: none; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            z-index: 9999; 
+            text-align: center; 
+            color: #1f2937;
         }
         
         canvas {
             border-bottom: 2px solid #5b21b6;
             background: transparent;
-            touch-action: manipulation; /* Mejora respuesta táctil */
+            touch-action: manipulation;
         }
-
+        
         /* Botones de Bingo */
-        .card-item-container { display: flex; flex-direction: column; align-items: center; padding: 2px; cursor: pointer; transition: transform 0.1s; }
-        .card-item-container:hover { transform: scale(1.05); }
+        .card-item-container { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            padding: 2px; 
+            cursor: pointer; 
+            transition: transform 0.1s; 
+        }
         
-        .bingo-ball { width: 48px; height: 48px; display: flex; justify-content: center; align-items: center; font-size: 18px; font-weight: 900; border-radius: 50%; box-shadow: 0 4px 6px rgba(0,0,0,0.2); z-index: 2; position: relative;}
-        .ver-tag { font-size: 10px; font-weight: bold; background-color: #fcd34d; color: #1f2937; padding: 1px 6px; margin-top: 4px; border-radius: 4px; border: 1px solid #fbbf24; z-index: 2; position: relative; }
-        .ver-tag:hover { background-color: #fbbf24; }
-
+        .card-item-container:hover { 
+            transform: scale(1.05); 
+        }
+        
+        .bingo-ball { 
+            width: 48px; 
+            height: 48px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            font-size: 18px; 
+            font-weight: 900; 
+            border-radius: 50%; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2); 
+            z-index: 2; 
+            position: relative;
+        }
+        
+        .ver-tag { 
+            font-size: 10px; 
+            font-weight: bold; 
+            background-color: #fcd34d; 
+            color: #1f2937; 
+            padding: 1px 6px; 
+            margin-top: 4px; 
+            border-radius: 4px; 
+            border: 1px solid #fbbf24; 
+            z-index: 2; 
+            position: relative; 
+        }
+        
+        .ver-tag:hover { 
+            background-color: #fbbf24; 
+        }
+        
         /* Estados de Color */
-        .status-available .bingo-ball { background-color: #6b21a8; color: white; border: 2px solid #5b21b6; }
-        .status-selected .bingo-ball { background-color: #fcd34d; color: #1f2937; border: 2px solid #fbbf24; transform: scale(1.1); }
-        .status-reserved .bingo-ball { background-color: #f97316; color: white; border: 2px solid #ea580c; animation: pulse-orange 2s infinite; }
-        .status-sold .bingo-ball { background-color: #16a34a; color: white; border: 2px solid #15803d; }
-
-        @keyframes pulse-orange { 0% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(249, 115, 22, 0); } 100% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0); } }
-
-        .omega-title { font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 3rem; line-height: 1; text-shadow: 2px 2px 0 #5b21b6; color: #fcd34d; }
-        #countdownTimer { font-size: 2.5rem; font-weight: 900; color: #fcd34d; text-shadow: 2px 2px 0 #5b21b6; }
+        .status-available .bingo-ball { 
+            background-color: #6b21a8; 
+            color: white; 
+            border: 2px solid #5b21b6; 
+        }
         
-        /* Panel Admin */
-        .admin-panel { min-height: 100vh; background: #f3f4f6; padding: 2rem; }
+        .status-selected .bingo-ball { 
+            background-color: #fcd34d; 
+            color: #1f2937; 
+            border: 2px solid #fbbf24; 
+            transform: scale(1.1); 
+        }
+        
+        .status-reserved .bingo-ball { 
+            background-color: #f97316; 
+            color: white; 
+            border: 2px solid #ea580c; 
+            animation: pulse-orange 2s infinite; 
+        }
+        
+        .status-sold .bingo-ball { 
+            background-color: #16a34a; 
+            color: white; 
+            border: 2px solid #15803d; 
+        }
+        
+        @keyframes pulse-orange { 
+            0% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.7); } 
+            70% { box-shadow: 0 0 0 10px rgba(249, 115, 22, 0); } 
+            100% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0); } 
+        }
+        
+        /* Admin Panel */
+        .admin-panel { 
+            min-height: 100vh; 
+            background: #f3f4f6; 
+            padding: 2rem; 
+        }
+        
+        /* Footer Profesional */
+        .main-footer {
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0c29 100%);
+            color: #e0e0e0;
+            padding: 3rem 0 1rem;
+            margin-top: 4rem;
+        }
+        
+        .sala-image-container {
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sala-image-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+            animation: move-pattern 20s linear infinite;
+        }
+        
+        @keyframes move-pattern {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(30px, 30px); }
+        }
+        
+        .sala-icon {
+            font-size: 5rem;
+            color: rgba(255,255,255,0.9);
+            z-index: 1;
+        }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 </head>
-<body class="min-h-screen">
+<body>
 
+    <!-- OVERLAY DE TIENDA CERRADA CON JUEGO -->
     <div id="closedStoreOverlay" class="closed-overlay select-none">
         <div id="adminSecretLock" class="absolute top-5 right-5 text-gray-300 cursor-pointer p-2 opacity-30 hover:opacity-100 z-50">
             <i class="fas fa-lock fa-lg"></i>
         </div>
 
         <div class="relative w-full max-w-lg h-full flex flex-col justify-center items-center">
-            
             <div class="absolute top-10 text-center w-full px-4">
                 <h2 class="text-2xl font-black text-purple-800 mb-1 uppercase tracking-wide">¡Aún estamos cerrados!</h2>
                 <p class="text-gray-500 text-sm font-bold mb-2">Reservas a partir de las 8:00 AM</p>
@@ -121,12 +371,10 @@
                 Próximo Bingo para el 11/12/25 - 7:00 PM<br>
                 ¡Partidas EN VIVO por Whatsapp!
             </p>
-            
-            <div class="mt-4 border-t border-gray-100 pt-4 w-1/2 mx-auto text-center">
-                <p class="text-[10px] text-gray-300 font-bold tracking-widest">© OMEGA BINGO SYSTEM</p>
-            </div>
         </div>
     </div>
+
+    <!-- PANEL ADMIN -->
     <div id="adminPanel" class="admin-panel hidden">
         <div class="max-w-4xl mx-auto">
             <div class="flex justify-between items-center mb-8 bg-white p-4 rounded-xl shadow-md">
@@ -143,7 +391,6 @@
             </div>
 
             <div id="adminDashboard" class="hidden space-y-8">
-                
                 <div class="bg-white p-6 rounded-xl shadow-lg border-t-8 border-purple-600 flex justify-between items-center">
                     <div>
                         <h2 class="text-xl font-bold text-gray-800">🏪 Estado de la Tienda</h2>
@@ -179,97 +426,236 @@
         </div>
     </div>
 
+    <!-- CONTENIDO PRINCIPAL DEL CLIENTE -->
     <div id="clientContent">
-        <div class="max-w-xl mx-auto p-4 pb-20">
-            <div class="bg-yellow-400 p-4 rounded-t-xl text-center shadow-lg border-b-4 border-purple-800 mb-4">
-                <p class="font-black text-xl text-gray-900">¡OMEGA BINGO MAYOR!</p>
-                <div class="mt-2 p-2 bg-purple-800 rounded-lg">
-                    <p class="text-purple-200 text-xs font-bold uppercase tracking-widest">
-                        Próximo Juego: <span id="bingoDateDisplay">--</span>
-                    </p>
-                    <div id="countdownTimer">--:--:--</div>
+        <!-- HEADER PROFESIONAL -->
+        <header class="main-header">
+            <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <img src="logo-omega-bingo.png" alt="OMEGA Bingo" class="h-12 w-12 rounded-full bg-white p-1" id="header-logo" onclick="handleLogoClick()">
+                    <div>
+                        <h1 class="text-2xl font-black text-yellow-400" style="text-shadow: 2px 2px 0 #5b21b6;">OMEGA BINGO</h1>
+                        <p class="text-xs text-gray-300 font-semibold">Sistema de Reserva Online</p>
+                    </div>
+                </div>
+                <nav class="hidden md:flex space-x-1">
+                    <a href="#inicio" class="nav-link">INICIO</a>
+                    <a href="#salas" class="nav-link">SALAS</a>
+                    <a href="#consultar" class="nav-link">CONSULTAR</a>
+                    <a href="#contacto" class="nav-link">CONTACTO</a>
+                </nav>
+                <button onclick="showCardSelectionModal()" class="btn-premium text-sm px-4 py-2">
+                    COMPRAR 🎟️
+                </button>
+            </div>
+        </header>
+
+        <!-- HERO SECTION -->
+        <section id="inicio" class="hero-section">
+            <div class="max-w-7xl mx-auto px-4 text-center relative z-10">
+                <h2 class="text-5xl md:text-6xl font-black text-white mb-4" style="text-shadow: 3px 3px 0 rgba(0,0,0,0.3);">
+                    ¡EL MAYOR BINGO DE VENEZUELA!
+                </h2>
+                <p class="text-xl text-purple-100 mb-6 font-semibold">Próximo Juego: <span id="bingoDateDisplay" class="text-yellow-300 font-black">--</span></p>
+                <div class="inline-block bg-white/10 backdrop-blur-md rounded-2xl p-6 border-2 border-white/20">
+                    <p class="text-purple-200 text-sm font-bold mb-2">CUENTA REGRESIVA</p>
+                    <div id="countdownTimer" class="text-5xl font-black text-yellow-300" style="text-shadow: 2px 2px 0 rgba(0,0,0,0.3);">--:--:--</div>
+                </div>
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+                    <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20">
+                        <p class="text-white font-bold text-sm mb-1">VALOR TABLA</p>
+                        <p class="text-3xl font-black text-green-400">Bs. 300,00</p>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20">
+                        <p class="text-white font-bold text-sm mb-1">DISPONIBLES</p>
+                        <p class="text-3xl font-black text-blue-400"><span id="availableCount">--</span>/75</p>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20">
+                        <p class="text-white font-bold text-sm mb-1">PARTIDAS</p>
+                        <p class="text-3xl font-black text-pink-400">EN VIVO 📱</p>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <div class="bg-white p-4 rounded-xl shadow-lg text-center mb-6 border border-gray-200">
-                <p class="font-bold text-gray-600">Valor de la Tabla</p>
-                <p class="text-3xl font-black text-green-600">Bs. 300,00</p>
-                <div class="mt-2 flex justify-center gap-4 text-sm">
-                    <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-bold">Disponibles: <span id="availableCount">--</span></span>
+        <!-- SECCIÓN DE SALAS -->
+        <section id="salas" class="max-w-7xl mx-auto px-4 py-16">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-black text-white mb-4">NUESTRAS SALAS DE BINGO</h2>
+                <p class="text-gray-300 text-lg">Elige tu sala favorita y comienza a jugar</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- SALA 1: OMEGA MAYOR -->
+                <div class="sala-card">
+                    <div class="sala-badge">🔥 PRINCIPAL</div>
+                    <div class="sala-image-container" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <i class="fas fa-crown sala-icon"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-black text-gray-800 mb-2">OMEGA MAYOR</h3>
+                        <p class="text-sm text-gray-600 mb-4">Nuestra sala principal con los mayores premios. Abierta las 24 horas.</p>
+                        <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 mb-4">
+                            <p class="text-xs text-gray-600 font-bold mb-1">BOTE ACUMULADO</p>
+                            <p class="bote-amount">Bs. 5,000</p>
+                        </div>
+                        <button onclick="selectSala('OMEGA_MAYOR')" class="w-full btn-premium">
+                            JUGAR AHORA
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SALA 2: OMEGA EXPRESS -->
+                <div class="sala-card">
+                    <div class="sala-badge">⚡ RÁPIDO</div>
+                    <div class="sala-image-container" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <i class="fas fa-bolt sala-icon"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-black text-gray-800 mb-2">OMEGA EXPRESS</h3>
+                        <p class="text-sm text-gray-600 mb-4">Partidas rápidas cada 5 minutos. Ideal para jugar en cualquier momento.</p>
+                        <div class="bg-gradient-to-r from-orange-50 to-red-50 rounded-xl p-4 mb-4">
+                            <p class="text-xs text-gray-600 font-bold mb-1">PRÓXIMA PARTIDA</p>
+                            <p class="text-2xl font-black text-orange-600">2:30 min</p>
+                        </div>
+                        <button onclick="selectSala('OMEGA_EXPRESS')" class="w-full btn-premium">
+                            JUGAR AHORA
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SALA 3: OMEGA ECONÓMICA -->
+                <div class="sala-card">
+                    <div class="sala-badge">💰 ECONÓMICA</div>
+                    <div class="sala-image-container" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <i class="fas fa-coins sala-icon"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-black text-gray-800 mb-2">OMEGA ECONÓMICA</h3>
+                        <p class="text-sm text-gray-600 mb-4">Tablas a mitad de precio. Perfecta para comenzar.</p>
+                        <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-4 mb-4">
+                            <p class="text-xs text-gray-600 font-bold mb-1">VALOR ESPECIAL</p>
+                            <p class="text-2xl font-black text-blue-600">Bs. 150</p>
+                        </div>
+                        <button onclick="selectSala('OMEGA_ECONOMICA')" class="w-full btn-premium">
+                            JUGAR AHORA
+                        </button>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <div class="text-center mb-8">
-                <h1 class="omega-title">OMEGA</h1>
-                <p class="omega-subtitle">Sistema de Reserva Online</p>
-            </div>
-
-            <div class="bg-white p-5 rounded-xl shadow-xl mb-8 border-l-4 border-purple-600">
-                <h3 class="font-bold text-gray-800 mb-3 flex items-center">
-                    <svg class="w-5 h-5 mr-2 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
-                    Datos Pago Móvil
+        <!-- INFORMACIÓN DE PAGO -->
+        <section class="max-w-4xl mx-auto px-4 py-8">
+            <div class="bg-white/10 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-white/20">
+                <h3 class="font-bold text-white text-xl mb-4 flex items-center">
+                    <svg class="w-6 h-6 mr-3 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                    Datos para Pago Móvil
                 </h3>
-                <div class="space-y-2 text-sm text-gray-600">
-                    <div class="flex justify-between border-b pb-1"><span>Banco:</span> <span class="font-bold text-gray-900 cursor-pointer" onclick="copyToClipboard('0108')">0108 (Provincial) 📋</span></div>
-                    <div class="flex justify-between border-b pb-1"><span>Cédula:</span> <span class="font-bold text-gray-900 cursor-pointer" onclick="copyToClipboard('25822059')">V25822059 📋</span></div>
-                    <div class="flex justify-between"><span>Teléfono:</span> <span class="font-bold text-gray-900 cursor-pointer" onclick="copyToClipboard('04129546751')">04129546751 📋</span></div>
-                </div>
-            </div>
-
-            <button onclick="showCardSelectionModal()" class="w-full py-4 bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900 font-black text-xl rounded-xl shadow-xl hover:scale-[1.02] transition-transform mb-8 uppercase tracking-wide">
-                Comprar Tablas 🎟️
-            </button>
-
-            <div class="grid gap-4">
-                <div class="bg-white p-5 rounded-xl shadow-md">
-                    <h3 class="font-bold text-gray-700 mb-2">🔍 Consultar por Teléfono</h3>
-                    <div class="flex gap-2">
-                        <input type="tel" id="searchPhoneInput" placeholder="Ej: 0412..." class="w-full p-2 border rounded bg-gray-50">
-                        <button onclick="searchCardByPhone()" class="bg-purple-600 text-white px-4 rounded font-bold">Ver</button>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                        <p class="text-gray-300 text-sm mb-1">Banco:</p>
+                        <p class="text-white font-bold text-lg cursor-pointer hover:text-yellow-300" onclick="copyToClipboard('0108')">0108 Provincial 📋</p>
                     </div>
-                </div>
-                <div class="bg-white p-5 rounded-xl shadow-md">
-                    <h3 class="font-bold text-gray-700 mb-2">🆔 Ver Tabla Individual</h3>
-                    <div class="flex gap-2">
-                        <input type="number" id="cardNumberInput" placeholder="N° Tabla" class="w-full p-2 border rounded bg-gray-50">
-                        <button onclick="searchCard()" class="bg-purple-600 text-white px-4 rounded font-bold">Ver</button>
+                    <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                        <p class="text-gray-300 text-sm mb-1">Cédula:</p>
+                        <p class="text-white font-bold text-lg cursor-pointer hover:text-yellow-300" onclick="copyToClipboard('25822059')">V25822059 📋</p>
+                    </div>
+                    <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                        <p class="text-gray-300 text-sm mb-1">Teléfono:</p>
+                        <p class="text-white font-bold text-lg cursor-pointer hover:text-yellow-300" onclick="copyToClipboard('04129546751')">04129546751 📋</p>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <div id="searchResultArea" class="hidden mt-6 bg-white p-4 rounded-xl shadow-xl text-center border-2 border-purple-100">
-                <h3 id="resultTitle" class="font-bold text-lg text-purple-800 mb-2"></h3>
+        <!-- SECCIÓN CONSULTAR -->
+        <section id="consultar" class="max-w-4xl mx-auto px-4 py-12">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-black text-white mb-2">CONSULTA TUS TABLAS</h2>
+                <p class="text-gray-300">Verifica el estado de tus reservas</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h3 class="font-bold text-gray-700 mb-4 flex items-center">
+                        <i class="fas fa-phone mr-2 text-purple-600"></i>
+                        Consultar por Teléfono
+                    </h3>
+                    <div class="flex gap-2">
+                        <input type="tel" id="searchPhoneInput" placeholder="Ej: 0412..." class="flex-1 p-3 border-2 border-gray-200 rounded-lg focus:border-purple-500 outline-none">
+                        <button onclick="searchCardByPhone()" class="bg-purple-600 text-white px-6 rounded-lg font-bold hover:bg-purple-700 transition">
+                            Buscar
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h3 class="font-bold text-gray-700 mb-4 flex items-center">
+                        <i class="fas fa-hashtag mr-2 text-purple-600"></i>
+                        Ver Tabla Individual
+                    </h3>
+                    <div class="flex gap-2">
+                        <input type="number" id="cardNumberInput" placeholder="N° Tabla" class="flex-1 p-3 border-2 border-gray-200 rounded-lg focus:border-purple-500 outline-none">
+                        <button onclick="searchCard()" class="bg-purple-600 text-white px-6 rounded-lg font-bold hover:bg-purple-700 transition">
+                            Ver
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="searchResultArea" class="hidden mt-8 bg-white p-6 rounded-2xl shadow-2xl text-center border-2 border-purple-100">
+                <h3 id="resultTitle" class="font-bold text-xl text-purple-800 mb-4"></h3>
                 <div id="resultContent" class="flex justify-center flex-wrap gap-4"></div>
-                <p id="resultStatus" class="text-sm font-bold mt-2"></p>
+                <p id="resultStatus" class="text-sm font-bold mt-4"></p>
             </div>
+        </section>
 
-            <div class="mt-12 text-center">
-                <img src="logo-omega-bingo.png" id="footer-logo" class="mx-auto w-24 rounded-full shadow-lg bg-white p-1" alt="Logo">
-                <h3 class="text-xl font-bold text-white mb-4">Síguenos en Redes Sociales</h3>
-                <div class="flex justify-center space-x-6 mb-6">
-                    <a href="https://wa.me/584226431972" target="_blank" class="text-white hover:text-green-400 transition-colors" title="WhatsApp">
-                        <i class="fab fa-whatsapp fa-3x" style="color:#25D366;"></i>
-                    </a>
-                    <a href="https://www.facebook.com/OmegabingoAA/" target="_blank" class="text-white hover:text-blue-600 transition-colors" title="Facebook">
-                        <i class="fab fa-facebook fa-3x"></i>
-                    </a>
-                    <a href="https://www.instagram.com/omega_bingo?igsh=MTY4czZ0NDltZ2gxZA==" target="_blank" class="text-white hover:text-pink-600 transition-colors" title="Instagram">
-                        <i class="fab fa-instagram fa-3x"></i>
-                    </a>
+        <!-- FOOTER PROFESIONAL -->
+        <footer id="contacto" class="main-footer">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="grid md:grid-cols-3 gap-8 mb-8">
+                    <div>
+                        <img src="logo-omega-bingo.png" alt="OMEGA" class="h-16 w-16 rounded-full bg-white p-1 mb-4">
+                        <h3 class="text-xl font-bold text-yellow-400 mb-2">OMEGA BINGO</h3>
+                        <p class="text-gray-400 text-sm">El sistema de bingo online más confiable de Venezuela</p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-lg font-bold text-white mb-4">SÍGUENOS</h4>
+                        <div class="flex space-x-4">
+                            <a href="https://wa.me/584226431972" target="_blank" class="text-3xl hover:scale-110 transition-transform">
+                                <i class="fab fa-whatsapp" style="color:#25D366;"></i>
+                            </a>
+                            <a href="https://www.facebook.com/OmegabingoAA/" target="_blank" class="text-3xl hover:scale-110 transition-transform">
+                                <i class="fab fa-facebook" style="color:#3b5998;"></i>
+                            </a>
+                            <a href="https://www.instagram.com/omega_bingo?igsh=MTY4czZ0NDltZ2gxZA==" target="_blank" class="text-3xl hover:scale-110 transition-transform">
+                                <i class="fab fa-instagram" style="color:#E1306C;"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-bold text-white mb-4">LEGAL</h4>
+                        <div class="space-y-2">
+                            <button onclick="showLegalModal('terms')" class="block text-gray-300 hover:text-yellow-400 transition">Términos y Condiciones</button>
+                            <button onclick="showLegalModal('privacy')" class="block text-gray-300 hover:text-yellow-400 transition">Política de Privacidad</button>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="flex justify-center space-x-4 mb-6 text-sm">
-                    <button onclick="showLegalModal('terms')" class="text-yellow-300 font-bold hover:underline">Términos y Condiciones</button>
-                    <span class="text-purple-300">|</span>
-                    <button onclick="showLegalModal('privacy')" class="text-yellow-300 font-bold hover:underline">Política de Privacidad</button>
+                <div class="border-t border-gray-700 pt-6 text-center">
+                    <p class="text-gray-400 text-sm mb-2">© OMEGA Bingo / Masson 2025. Todos los derechos reservados</p>
+                    <img src="logo-masson-bingo.png" alt="Masson" class="h-8 inline-block opacity-50">
                 </div>
-
-                <p class="text-xs text-purple-200 mt-4">© OMEGA Bingo / Masson 2025. Todos los derechos reservados</p>
-                <img src="logo-masson-bingo.png" id="footer-logo-masson" class="h-auto w-16 inline-block" alt="logo"> 
             </div>
-            </div>
+        </footer>
     </div>
 
+    <!-- MODALES -->
+    
+    <!-- Modal Selección de Tablas -->
     <div id="cardSelectionModal" class="modal">
         <div class="modal-content">
             <div class="flex justify-between items-center mb-4 border-b pb-2">
@@ -284,8 +670,7 @@
                 <span class="flex items-center"><div class="w-3 h-3 bg-green-600 rounded-full mr-1"></div> Vendida</span>
             </div>
 
-            <div id="cardListContainer" class="grid grid-cols-6 sm:grid-cols-8 gap-2 max-h-[60vh] overflow-y-auto p-1">
-                </div>
+            <div id="cardListContainer" class="grid grid-cols-6 sm:grid-cols-8 gap-2 max-h-[60vh] overflow-y-auto p-1"></div>
 
             <div class="mt-4 border-t pt-4">
                 <div class="flex justify-between items-center mb-3">
@@ -299,6 +684,7 @@
         </div>
     </div>
 
+    <!-- Modal Preview de Tabla -->
     <div id="cardPreviewModal" class="modal">
         <div class="modal-content text-center">
             <h3 class="text-xl font-bold text-gray-800 mb-2">Tabla N° <span id="previewNum" class="text-purple-600"></span></h3>
@@ -311,6 +697,7 @@
         </div>
     </div>
 
+    <!-- Modal Proceso de Pago -->
     <div id="paymentProcessModal" class="modal">
         <div class="modal-content">
             <div class="flex justify-between items-center mb-2">
@@ -350,79 +737,61 @@
         </div>
     </div>
 
+    <!-- Modal Legal -->
     <div id="legalModal" class="modal">
         <div class="modal-legal-content">
             <div class="flex justify-between items-center mb-4 border-b pb-2">
                 <h3 id="legalModalTitle" class="text-xl font-bold text-gray-800"></h3>
                 <button onclick="hideLegalModal()" class="text-2xl text-gray-500">&times;</button>
             </div>
-            
-            <div id="legalModalBody" class="modal-legal-body text-sm text-gray-700">
-                </div>
-
+            <div id="legalModalBody" class="modal-legal-body text-sm text-gray-700"></div>
         </div>
     </div>
+
     <script>
-        // ==========================================================
-        // ============== CONFIGURACIÓN BINGO ==============
-        // ==========================================================
+        // CONFIGURACIÓN
         const TOTAL_CARDS = 75;
         const CARD_PRICE = 300;
-        const BINGO_DATE_STRING = 'December 11, 2025 19:00:00'; 
-        const BINGO_DATE = new Date(BINGO_DATE_STRING).getTime(); 
+        const BINGO_DATE_STRING = 'December 11, 2025 19:00:00';
+        const BINGO_DATE = new Date(BINGO_DATE_STRING).getTime();
         
         let selectedCards = JSON.parse(localStorage.getItem('omega_selected_cards')) || [];
         let liveData = {};
         let previewCard = null;
         let timerInterval;
         let adminClicks = 0;
-        let isStoreOpen = true; 
+        let isStoreOpen = true;
+        let currentSala = 'OMEGA_MAYOR'; // Sala por defecto
 
-        // ==========================================================
-        // ============== 🕹️ LÓGICA DEL JUEGO DINO (VERSIÓN TURBO) 🕹️ ==============
-        // ==========================================================
-        
+        // ========== JUEGO DINO ==========
         const canvas = document.getElementById('dinoCanvas');
         const ctx = canvas.getContext('2d');
-        let gameAnimationFrame;
-        let gameScore = 0;
+        let gameAnimationFrame, gameScore = 0, gameSpeed = 5, isGaming = false;
         
-        // 🚀 AJUSTE DE VELOCIDAD AQUÍ
-        let gameSpeed = 5; // EMPIEZA MUCHO MÁS RÁPIDO (Antes era 5)
-        
-        let isGaming = false;
-        
-        // Ajustar canvas
         canvas.width = 600;
         canvas.height = 200;
 
-        // Entidades (GRAVEDAD MÁS FUERTE PARA SALTO RÁPIDO)
         let dino = { x: 50, y: 150, width: 30, height: 30, dy: 0, jumpPower: -15, gravity: 0.8, grounded: true };
         let obstacles = [];
         let frameCount = 0;
 
-        // Dibujar Pixel Art Simple
         function drawPixelDino(x, y) {
             ctx.fillStyle = 'black';
-            // Cuerpo
             ctx.fillRect(x, y, 30, 30);
-            // Cabeza
             ctx.fillRect(x + 10, y - 10, 20, 20);
-            // Ojo
             ctx.fillStyle = 'white';
             ctx.fillRect(x + 20, y - 5, 5, 5);
         }
 
         function drawCactus(x, y, w, h) {
-            ctx.fillStyle = '#9333ea'; // Morado Omega
+            ctx.fillStyle = '#9333ea';
             ctx.fillRect(x, y, w, h);
-            // Detalle
             ctx.fillStyle = '#7e22ce';
             ctx.fillRect(x+5, y+5, w-10, h-10);
         }
 
         function drawBird(x, y) {
-            ctx.fillStyle = '#4b5563'; // Gris oscuro
+            ctx.fillStyle = '#4b5563';
             ctx.beginPath();
             ctx.moveTo(x, y);
             ctx.lineTo(x+15, y+10);
@@ -434,13 +803,12 @@
         function spawnObstacle() {
             let type = Math.random() > 0.7 ? 'bird' : 'cactus';
             let obj = { x: canvas.width, type: type, passed: false };
-
             if(type === 'cactus') {
-                obj.y = 150; 
+                obj.y = 150;
                 obj.width = 20 + Math.random() * 20;
-                obj.height = 30 + Math.random() * 20; 
+                obj.height = 30 + Math.random() * 20;
             } else {
-                obj.y = 90 + Math.random() * 40; // Altura variable
+                obj.y = 90 + Math.random() * 40;
                 obj.width = 30;
                 obj.height = 20;
             }
@@ -449,22 +817,16 @@
 
         function updateGame() {
             if(!isGaming) return;
-
-            // Limpiar
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // Fondo Suelo
             ctx.beginPath();
             ctx.moveTo(0, 180);
             ctx.lineTo(canvas.width, 180);
             ctx.strokeStyle = '#ddd';
             ctx.stroke();
 
-            // Física Dino
             dino.dy += dino.gravity;
             dino.y += dino.dy;
 
-            // Colisión suelo
             if (dino.y > 150) {
                 dino.y = 150;
                 dino.dy = 0;
@@ -475,7 +837,6 @@
 
             drawPixelDino(dino.x, dino.y);
 
-            // Obstáculos
             frameCount++;
             if (frameCount % (100 - Math.floor(gameSpeed * 2)) === 0) {
                 spawnObstacle();
@@ -488,32 +849,19 @@
                 if (obs.type === 'cactus') drawCactus(obs.x, obs.y, obs.width, obs.height);
                 else drawBird(obs.x, obs.y);
 
-                // Colisión
-                if (
-                    dino.x < obs.x + obs.width &&
-                    dino.x + dino.width > obs.x &&
-                    dino.y < obs.y + obs.height &&
-                    dino.y + dino.height > obs.y
-                ) {
+                if (dino.x < obs.x + obs.width && dino.x + dino.width > obs.x && dino.y < obs.y + obs.height && dino.y + dino.height > obs.y) {
                     gameOver();
                 }
 
-                // Puntaje
                 if (obs.x + obs.width < dino.x && !obs.passed) {
                     gameScore += 10;
                     obs.passed = true;
                     document.getElementById('gameScore').innerText = gameScore;
-                    
-                    // 🚀 ACELERACIÓN AGRESIVA
-                    if(gameScore % 100 === 0) {
-                        gameSpeed += 0.5; // Aumenta más rápido
-                    }
+                    if(gameScore % 100 === 0) gameSpeed += 0.5;
                 }
             }
             
-            // Limpiar obstáculos viejos
             obstacles = obstacles.filter(obs => obs.x > -50);
-
             gameAnimationFrame = requestAnimationFrame(updateGame);
         }
 
@@ -525,18 +873,14 @@
             }
         }
 
-        // Controles Teclado
         document.addEventListener('keydown', function(event) {
-            if (event.code === 'Space' && isGaming) {
-                jumpDino();
-            }
+            if (event.code === 'Space' && isGaming) jumpDino();
         });
 
         function startGame() {
             document.getElementById('gameMessage').classList.add('hidden');
             gameScore = 0;
-            // VELOCIDAD DE REINICIO
-            gameSpeed = 5; 
+            gameSpeed = 5;
             obstacles = [];
             dino.y = 150;
             dino.dy = 0;
@@ -559,7 +903,7 @@
             cancelAnimationFrame(gameAnimationFrame);
         }
 
-        // ================== INICIALIZACIÓN GENERAL ==================
+        // ========== INICIALIZACIÓN ==========
         window.onload = () => {
             document.getElementById('bingoDateDisplay').textContent = new Date(BINGO_DATE).toLocaleDateString('es-ES', { 
                 weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' 
@@ -567,12 +911,10 @@
 
             startRealtimeSync();
             startBingoTimer();
-            checkStoreStatus(); 
+            checkStoreStatus();
             
             const pendingTimer = localStorage.getItem('omega_payment_start');
-            if (pendingTimer && selectedCards.length > 0) {
-                 startPaymentTimer(); 
-            }
+            if (pendingTimer && selectedCards.length > 0) startPaymentTimer();
 
             document.getElementById('payFile').addEventListener('change', function(e) {
                 if(this.files[0]) document.getElementById('fileNameDisplay').textContent = this.files[0].name;
@@ -583,10 +925,6 @@
             localStorage.setItem('omega_selected_cards', JSON.stringify(selectedCards));
         }
 
-        // ----------------------------------------------------
-        // =========== LÓGICA DE TIENDA + JUEGO INTEGRADO ==========
-        // ----------------------------------------------------
-        
         function checkStoreStatus() {
             db.collection('config').doc('general').onSnapshot(doc => {
                 if (doc.exists) {
@@ -623,11 +961,10 @@
             if (!isStoreOpen && !currentUser) {
                 overlay.style.display = 'flex';
                 document.body.style.overflow = 'hidden';
-                // 🛑 NO iniciamos el juego automáticamente para no consumir batería hasta que den click en JUGAR
             } else {
                 overlay.style.display = 'none';
                 document.body.style.overflow = 'auto';
-                stopGameLogic(); // Detener juego si se abre la tienda
+                stopGameLogic();
             }
         }
 
@@ -639,12 +976,11 @@
             }
         }
 
-        // Trigger Secreto Admin en Overlay (Candado)
         let lockClicks = 0;
         document.getElementById('adminSecretLock').addEventListener('click', () => {
             lockClicks++;
             if(lockClicks >= 6) {
-                document.getElementById('closedStoreOverlay').style.display = 'none'; 
+                document.getElementById('closedStoreOverlay').style.display = 'none';
                 stopGameLogic();
                 document.getElementById('clientContent').classList.add('hidden');
                 document.getElementById('adminPanel').classList.remove('hidden');
@@ -652,11 +988,6 @@
                 lockClicks = 0;
             }
         });
-
-
-        // ----------------------------------------------------
-        // =========== SINCRONIZACIÓN Y LIVE DATA ==========
-        // ----------------------------------------------------
 
         function startRealtimeSync() {
             db.collection('ventasConfirmadas').onSnapshot(snap => {
@@ -674,7 +1005,7 @@
             db.collection('reservasPendientes').onSnapshot(snap => {
                 snap.docChanges().forEach(change => {
                     const d = change.doc.data();
-                    const docId = change.doc.id; 
+                    const docId = change.doc.id;
                     
                     (d.cards || []).forEach(c => {
                         const isSold = liveData[c]?.status === 'sold';
@@ -690,7 +1021,7 @@
             });
 
             auth.onAuthStateChanged(u => {
-                updateStoreUI(); 
+                updateStoreUI();
                 if(u) {
                     document.getElementById('clientContent').classList.add('hidden');
                     document.getElementById('adminPanel').classList.remove('hidden');
@@ -705,7 +1036,6 @@
             });
         }
 
-        // FUNCIÓN DE ACTUALIZACIÓN DE LA UI
         function updateUI() {
             let sold = 0;
             for(let i=1; i<=TOTAL_CARDS; i++) {
@@ -733,13 +1063,13 @@
             });
 
             if (conflicts.length > 0) {
-                alert(`⚠️ ¡ATENCIÓN! El número(s) ${conflicts.join(', ')} acaba de ser comprado/reservado por otro jugador. Estos números han sido retirados de tu lista.`);
+                alert(`⚠️ ¡ATENCIÓN! El número(s) ${conflicts.join(', ')} acaba de ser comprado/reservado por otro jugador.`);
                 selectedCards = newSelection;
                 saveLocalSelection();
 
                 if (selectedCards.length === 0) {
-                    hidePaymentModal(); 
-                    localStorage.removeItem('omega_payment_start'); 
+                    hidePaymentModal();
+                    localStorage.removeItem('omega_payment_start');
                 } else {
                     document.getElementById('payCardsList').textContent = selectedCards.join(', ');
                     document.getElementById('payTotal').textContent = `Bs. ${(selectedCards.length * CARD_PRICE).toFixed(2)}`;
@@ -747,12 +1077,18 @@
             }
         }
 
+        function selectSala(sala) {
+            currentSala = sala;
+            alert(`Has seleccionado la sala: ${sala}. ¡Ahora puedes comprar tus tablas!`);
+            showCardSelectionModal();
+        }
+
         function showCardSelectionModal() {
             document.getElementById('cardPreviewModal').style.display = 'none';
             document.getElementById('paymentProcessModal').style.display = 'none';
-            document.getElementById('legalModal').style.display = 'none'; 
+            document.getElementById('legalModal').style.display = 'none';
             const modal = document.getElementById('cardSelectionModal');
-            modal.style.display = 'flex'; 
+            modal.style.display = 'flex';
             renderGrid();
             updateTotal();
             if(selectedCards.length > 0 && localStorage.getItem('omega_payment_start')) {
@@ -769,7 +1105,7 @@
         function getStatus(n) {
             if(liveData[n]?.status === 'sold') return 'sold';
             if(liveData[n]?.status === 'reserved') return 'reserved';
-            if(selectedCards.includes(n)) return 'selected'; 
+            if(selectedCards.includes(n)) return 'selected';
             return 'available';
         }
 
@@ -780,8 +1116,8 @@
                 const st = getStatus(i);
                 let tag = 'VER';
                 if(st === 'sold') tag = 'VENDIDA';
-                if(st === 'reserved') tag = 'OCUPADA'; 
-                if(st === 'selected') tag = 'TUYA'; 
+                if(st === 'reserved') tag = 'OCUPADA';
+                if(st === 'selected') tag = 'TUYA';
 
                 const div = document.createElement('div');
                 div.className = `card-item-container status-${st}`;
@@ -801,14 +1137,14 @@
                 if(selectedCards.includes(n)) selectedCards = selectedCards.filter(x => x !== n);
                 else {
                     if (liveData[n]?.status === 'sold' || liveData[n]?.status === 'reserved') {
-                         openPreview(n);
-                         return;
+                        openPreview(n);
+                        return;
                     }
                     selectedCards.push(n);
                 }
-                saveLocalSelection(); 
+                saveLocalSelection();
                 updateTotal();
-                renderGrid(); 
+                renderGrid();
             }
         }
 
@@ -832,7 +1168,7 @@
                 txt.className = "text-red-600 font-bold mb-4";
                 btn.style.display = 'none';
             } else if(st === 'reserved') {
-                txt.textContent = `⏳ OCUPADA. (${d.name || 'Otro jugador'}) Esperando confirmación de pago.`;
+                txt.textContent = `⏳ OCUPADA. (${d.name || 'Otro jugador'})`;
                 txt.className = "text-orange-500 font-bold mb-4";
                 btn.style.display = 'none';
             } else {
@@ -862,7 +1198,6 @@
             showCardSelectionModal();
         }
 
-        // ================== CLIENTE: PAGO ==================
         function preparePayment() {
             if(selectedCards.length === 0) return alert("Selecciona al menos una tabla");
             
@@ -875,14 +1210,14 @@
                 }
             }
             if (conflictDuringSelection) {
-                 saveLocalSelection();
-                 updateTotal();
-                 alert("⚠️ Una o más de tus tablas fueron reservadas o vendidas mientras seleccionabas. Han sido eliminadas de tu lista.");
+                saveLocalSelection();
+                updateTotal();
+                alert("⚠️ Una o más de tus tablas fueron reservadas o vendidas.");
             }
 
             if (selectedCards.length === 0) {
-                 hideCardSelectionModal();
-                 return; 
+                hideCardSelectionModal();
+                return;
             }
             
             document.getElementById('payName').value = '';
@@ -908,12 +1243,12 @@
             clearInterval(timerInterval);
             
             const startTime = parseInt(localStorage.getItem('omega_payment_start'));
-            if (!startTime) return; 
+            if (!startTime) return;
 
             timerInterval = setInterval(() => {
                 const now = Date.now();
                 const elapsedSeconds = Math.floor((now - startTime) / 1000);
-                const totalDuration = 300; // 5 minutos
+                const totalDuration = 300;
                 let remaining = totalDuration - elapsedSeconds;
 
                 if (remaining < 0) remaining = 0;
@@ -924,10 +1259,10 @@
 
                 if(remaining <= 0) {
                     clearInterval(timerInterval);
-                    alert("Lo siento, su tiempo de compra se ha agotado. Las tablas han sido liberadas.");
+                    alert("Tiempo agotado. Las tablas han sido liberadas.");
                     
                     localStorage.removeItem('omega_payment_start');
-                    selectedCards = []; 
+                    selectedCards = [];
                     localStorage.removeItem('omega_selected_cards');
                     
                     hidePaymentModal();
@@ -942,8 +1277,8 @@
         }
 
         async function submitPayment() {
-            const YOUR_CLOUD_NAME = "dcenrp74j"; 
-            const YOUR_UPLOAD_PRESET = "bingo_comprobantes"; 
+            const YOUR_CLOUD_NAME = "dcenrp74j";
+            const YOUR_UPLOAD_PRESET = "bingo_comprobantes";
             
             const name = document.getElementById('payName').value;
             const phone = document.getElementById('payPhone').value.replace(/\D/g,'');
@@ -952,14 +1287,14 @@
             const statusMsg = document.getElementById('uploadStatus');
 
             if(!name || phone.length < 10 || !ref || !file) {
-                statusMsg.textContent = "Datos incompletos o teléfono inválido.";
+                statusMsg.textContent = "Datos incompletos.";
                 statusMsg.className = "text-center text-sm mt-2 font-bold text-red-600 block";
                 return;
             }
 
             for (const card of selectedCards) {
                 if (liveData[card] && liveData[card].status === 'sold') {
-                    statusMsg.textContent = `Error: La tabla N° ${card} fue VENDIDA. Reinicia tu selección.`;
+                    statusMsg.textContent = `Error: Tabla N° ${card} fue VENDIDA.`;
                     statusMsg.className = "text-center text-sm mt-2 font-bold text-red-600 block";
                     return;
                 }
@@ -972,24 +1307,25 @@
                 const formData = new FormData();
                 formData.append('file', file);
                 formData.append('upload_preset', YOUR_UPLOAD_PRESET);
-                formData.append('public_id', `${phone}_${Date.now()}`); 
+                formData.append('public_id', `${phone}_${Date.now()}`);
                 const uploadUrl = `https://api.cloudinary.com/v1_1/${YOUR_CLOUD_NAME}/image/upload`;
 
                 const response = await fetch(uploadUrl, { method: 'POST', body: formData });
                 const data = await response.json();
-                const url = data.secure_url; 
+                const url = data.secure_url;
                 
                 if (!response.ok || !url) throw new Error(data.error ? data.error.message : response.statusText);
 
-                const newDocRef = await db.collection('reservasPendientes').add({ 
+                const newDocRef = await db.collection('reservasPendientes').add({
                     name: name,
                     phone: phone,
                     reference: ref,
-                    proofURL: url, 
+                    proofURL: url,
                     cards: selectedCards,
                     totalAmount: selectedCards.length * CARD_PRICE,
                     timestamp: Date.now(),
-                    status: 'PENDING_CONFIRMATION'
+                    status: 'PENDING_CONFIRMATION',
+                    sala: currentSala
                 });
 
                 selectedCards.forEach(c => {
@@ -1006,17 +1342,16 @@
 
                 setTimeout(() => {
                     hidePaymentModal();
-                    alert("Tu pago ha sido enviado. Espera la confirmación del administrador. Las tablas han sido reservadas (OCUPADAS).");
+                    alert("Tu pago ha sido enviado. Espera la confirmación del administrador.");
                 }, 1500);
 
             } catch(e) {
                 console.error("Error al subir:", e);
-                statusMsg.textContent = `Error: ${e.message || 'Fallo de red/Cloudinary.'}`;
+                statusMsg.textContent = `Error: ${e.message}`;
                 statusMsg.className = "text-center text-sm mt-2 font-bold text-red-600 block";
             }
         }
 
-        // ================== CONSULTAS ==================
         async function searchCardByPhone() {
             const p = document.getElementById('searchPhoneInput').value.replace(/\D/g,'');
             if(p.length < 10) return alert("Teléfono inválido");
@@ -1047,7 +1382,6 @@
             }
         }
 
-
         function searchCard() {
             const n = parseInt(document.getElementById('cardNumberInput').value);
             if(!n) return;
@@ -1061,10 +1395,12 @@
             content.innerHTML = `<div class="text-center"><img src="./tablas/tabla_${n}.png" class="bingo-card-image w-48 mx-auto mb-2" onerror="this.src='https://placehold.co/200?text=${n}'"><p class="font-bold text-${col}-600 text-xl">${st}</p>${d && d.name ? `<p class="text-sm text-gray-600">Jugador: ${d.name}</p>` : ''}<a href="./tablas/tabla_${n}.png" download class="inline-block mt-2 bg-purple-600 text-white px-4 py-1 rounded">Descargar</a></div>`;
         }
 
-        function copyToClipboard(txt) { navigator.clipboard.clipboard.writeText(txt); alert("Copiado!"); }
+        function copyToClipboard(txt) {
+            navigator.clipboard.writeText(txt);
+            alert("Copiado!");
+        }
 
-        // ================== ADMIN ACCESO Y RENDER ==================
-        document.getElementById('footer-logo').addEventListener('click', () => {
+        function handleLogoClick() {
             adminClicks++;
             if(adminClicks >= 6) {
                 document.getElementById('clientContent').classList.add('hidden');
@@ -1075,7 +1411,7 @@
                 }
                 adminClicks = 0;
             }
-        });
+        }
 
         function adminLogin() {
             const e = document.getElementById('adminEmail').value;
@@ -1096,7 +1432,7 @@
                 document.getElementById('pendingCount').textContent = snap.size;
                 snap.forEach(doc => {
                     const d = doc.data();
-                    div.innerHTML += `<div class="bg-white p-4 rounded-lg shadow border-l-4 border-yellow-400"><div class="flex justify-between mb-2"><span class="font-bold text-gray-800">${d.name}</span><span class="text-sm bg-gray-200 px-2 rounded">${d.phone}</span></div><p class="text-sm text-gray-600 mb-1">Ref: <b>${d.reference}</b> | Bs. ${d.totalAmount}</p><p class="text-sm mb-2">Tablas: <b class="text-purple-600">${d.cards.join(', ')}</b></p><a href="${d.proofURL}" target="_blank" class="block text-center bg-blue-50 text-blue-600 py-1 rounded text-sm font-bold mb-3 border border-blue-200">Ver Comprobante</a><div class="flex gap-2"><button onclick="confirmSale('${doc.id}')" class="flex-1 bg-green-500 text-white py-2 rounded font-bold hover:bg-green-600">APROBAR</button><button onclick="rejectSale('${doc.id}')" class="flex-1 bg-red-500 text-white py-2 rounded font-bold hover:bg-red-600">RECHAZAR</button></div></div>`;
+                    div.innerHTML += `<div class="bg-white p-4 rounded-lg shadow border-l-4 border-yellow-400"><div class="flex justify-between mb-2"><span class="font-bold text-gray-800">${d.name}</span><span class="text-sm bg-gray-200 px-2 rounded">${d.phone}</span></div><p class="text-sm text-gray-600 mb-1">Ref: <b>${d.reference}</b> | Bs. ${d.totalAmount}</p><p class="text-sm mb-2">Tablas: <b class="text-purple-600">${d.cards.join(', ')}</b> | Sala: <b>${d.sala || 'N/A'}</b></p><a href="${d.proofURL}" target="_blank" class="block text-center bg-blue-50 text-blue-600 py-1 rounded text-sm font-bold mb-3 border border-blue-200">Ver Comprobante</a><div class="flex gap-2"><button onclick="confirmSale('${doc.id}')" class="flex-1 bg-green-500 text-white py-2 rounded font-bold hover:bg-green-600">APROBAR</button><button onclick="rejectSale('${doc.id}')" class="flex-1 bg-red-500 text-white py-2 rounded font-bold hover:bg-red-600">RECHAZAR</button></div></div>`;
                 });
             });
         }
@@ -1114,7 +1450,7 @@
         }
 
         function confirmSale(id) {
-            if(!confirm("¿Confirmar pago y vender tablas? Esto verificará la disponibilidad final.")) return;
+            if(!confirm("¿Confirmar pago y vender tablas?")) return;
 
             db.collection('reservasPendientes').doc(id).get().then(doc => {
                 if (!doc.exists) return alert("Error: La reserva ya no existe.");
@@ -1137,61 +1473,57 @@
                 });
                 
                 if (conflict) {
-                    alert(`⛔ ERROR DE INTEGRIDAD: Se detectó que algunas tablas ya están Vendidas o Reservadas por otro. Solo se intentarán confirmar las disponibles (${cardsToSell.join(', ')}).`);
+                    alert(`⛔ ERROR: Algunas tablas ya están Vendidas o Reservadas. Solo se confirmarán: ${cardsToSell.join(', ')}.`);
                 }
 
                 if (cardsToSell.length === 0) {
-                     alert("🚫 Ninguna de las tablas de esta reserva está disponible para la venta. El registro se eliminará de 'Pendientes'.");
+                    alert("🚫 Ninguna tabla disponible para venta.");
                 }
                 
                 const batch = db.batch();
                 
                 if (cardsToSell.length > 0) {
-                    batch.set(db.collection('ventasConfirmadas').doc(), { 
-                        name: d.name, 
-                        phone: d.phone, 
+                    batch.set(db.collection('ventasConfirmadas').doc(), {
+                        name: d.name,
+                        phone: d.phone,
                         cards: cardsToSell,
-                        saleDate: firebase.firestore.FieldValue.serverTimestamp() 
+                        saleDate: firebase.firestore.FieldValue.serverTimestamp()
                     });
                 }
                 
                 batch.delete(db.collection('reservasPendientes').doc(id));
                 
                 batch.commit().then(() => {
-                    if (cardsToSell.length > 0) {
-                        alert(`Venta confirmada exitosamente. Tablas vendidas: ${cardsToSell.join(', ')}.`);
-                    } else {
-                        alert("Reserva eliminada. No se pudo vender ninguna tabla por conflicto.");
-                    }
+                    alert(cardsToSell.length > 0 ? `Venta confirmada: ${cardsToSell.join(', ')}.` : "Reserva eliminada.");
                 }).catch(e => {
-                    console.error("Error al confirmar venta:", e);
-                    alert("Hubo un error al confirmar la venta.");
+                    console.error("Error:", e);
+                    alert("Error al confirmar venta.");
                 });
             });
         }
 
-        function rejectSale(id) { 
+        function rejectSale(id) {
             if(confirm("¿Rechazar y liberar tablas?")) {
                 db.collection('reservasPendientes').doc(id).delete().then(() => {
-                    alert("Reserva rechazada y tablas liberadas.");
-                }).catch(e => console.error("Error al rechazar:", e));
+                    alert("Reserva rechazada.");
+                }).catch(e => console.error("Error:", e));
             }
         }
         
-        function deleteSale(id) { 
-            if(confirm("¿Eliminar venta? Las tablas quedarán libres.")) {
+        function deleteSale(id) {
+            if(confirm("¿Eliminar venta?")) {
                 db.collection('ventasConfirmadas').doc(id).delete().then(() => {
-                    alert("Venta eliminada. Las tablas serán marcadas como disponibles.");
-                }).catch(e => console.error("Error al eliminar venta:", e));
+                    alert("Venta eliminada.");
+                }).catch(e => console.error("Error:", e));
             }
         }
         
         function downloadSoldList() {
             db.collection('ventasConfirmadas').get().then(snap => {
                 let csv = "Nombre,Telefono,Tablas\n";
-                snap.forEach(doc => { 
-                    const d = doc.data(); 
-                    csv += `${d.name || ''},${d.phone || ''},"${(d.cards || []).join(';')}"\n`; 
+                snap.forEach(doc => {
+                    const d = doc.data();
+                    csv += `${d.name || ''},${d.phone || ''},"${(d.cards || []).join(';')}"\n`;
                 });
                 const blob = new Blob([csv],{type:'text/csv'});
                 const a = document.createElement('a');
@@ -1213,15 +1545,14 @@
                     return;
                 }
 
-                const oneSecond = 1000;
-                const oneMinute = oneSecond * 60;
-                const oneHour = oneMinute * 60;
-                const oneDay = oneHour * 24;
+                const oneDay = 1000 * 60 * 60 * 24;
+                const oneHour = 1000 * 60 * 60;
+                const oneMinute = 1000 * 60;
 
                 const days = Math.floor(dist / oneDay);
                 const hours = Math.floor((dist % oneDay) / oneHour);
                 const minutes = Math.floor((dist % oneHour) / oneMinute);
-                const seconds = Math.floor((dist % oneMinute) / oneSecond);
+                const seconds = Math.floor((dist % oneMinute) / 1000);
 
                 const dDisplay = days > 0 ? `${days}D ` : '';
                 const hDisplay = String(hours).padStart(2, '0');
@@ -1235,64 +1566,30 @@
             setInterval(timerFunction, 1000);
         }
 
-        // ==========================================================
-        // ============== FUNCIONES LEGALES ==============
-        // ==========================================================
-
         const legalContent = {
-            // COMENTARIO: Asegúrate de reemplazar "[Nombre de tu Página de Bingo]" y "[Fecha Actual]"
             terms: `
                 <h2 class="text-xl font-bold text-gray-900 mb-3">Términos y Condiciones del Servicio OMEGA Bingo</h2>
                 <p class="text-xs text-gray-500 mb-4">Última actualización: 04/12/25</p>
                 
                 <h3 class="font-bold text-lg text-purple-700 mt-4 mb-2">1. Aceptación de los Términos</h3>
-                <p>Al acceder y utilizar los servicios de OMEGA Bingo, usted acepta estar sujeto a estos Términos y Condiciones, así como a nuestra Política de Privacidad.</p>
+                <p>Al acceder y utilizar los servicios de OMEGA Bingo, usted acepta estar sujeto a estos Términos y Condiciones.</p>
                 
                 <h3 class="font-bold text-lg text-purple-700 mt-4 mb-2">2. Uso de la Cuenta y Seguridad</h3>
-                <p>Usted es responsable de mantener la confidencialidad de su contraseña y de todas las actividades que ocurran bajo su cuenta. Se compromete a notificarnos inmediatamente sobre cualquier uso no autorizado de su cuenta.</p>
+                <p>Usted es responsable de mantener la confidencialidad de su contraseña.</p>
                 
-                <h3 class="font-bold text-lg text-purple-700 mt-4 mb-2">3. Jurisdicción y Uso Legal (Venezuela / EEUU)</h3>
-                <ul class="list-disc list-inside space-y-1 ml-4">
-                    <li><strong>Juegos de Azar:</strong> Al participar, usted declara que cumple con la mayoría de edad legal para participar en juegos de azar en su jurisdicción. Es su responsabilidad asegurarse de que la participación en bingos en línea es legal en su lugar de residencia, tanto en Venezuela como en Estados Unidos, o cualquier otra ubicación.</li>
-                    <li><strong>Riesgo:</strong> La participación es bajo su propio riesgo. OMEGA Bingo no se hace responsable por cualquier pérdida incurrida.</li>
-                </ul>
-                
-                <h3 class="font-bold text-lg text-purple-700 mt-4 mb-2">4. Verificación y Documentación del Cliente</h3>
-                <p>Para garantizar la integridad del juego y la seguridad de las transacciones, podemos solicitar documentación adicional (como comprobantes de pago o identificación) para verificar su identidad y sus reservas. Esta información será tratada de acuerdo con nuestra Política de Privacidad.</p>
-
-                <h3 class="font-bold text-lg text-purple-700 mt-4 mb-2">5. Uso del Código y Licencia</h3>
-                <p>El código fuente y los elementos de diseño (imágenes, logos, etc.) de esta plataforma son propiedad privada de OMEGA Bingo Masson© o sus licenciatarios. El acceso a este sistema está estrictamente limitado al uso como cliente para la compra de tablas. Queda terminantemente prohibida la copia, reproducción, distribución, ingeniería inversa o cualquier uso no autorizado del código privado de la página web sin el consentimiento expreso y por escrito de los propietarios de OMEGA Bingo.</p>
-                
-                <h3 class="font-bold text-lg text-purple-700 mt-4 mb-2">6. Limitación de Responsabilidad</h3>
-                <p>OMEGA Bingo no se hace responsable de las pérdidas o daños que surjan de la falta de medidas de seguridad adecuadas en los dispositivos del usuario, o de fallos técnicos fuera de nuestro control razonable, incluyendo interrupciones en el servicio de Internet, fallos de red o errores de pago móvil de terceros.</p>
-                `,
+                <h3 class="font-bold text-lg text-purple-700 mt-4 mb-2">3. Jurisdicción y Uso Legal</h3>
+                <p>La participación es bajo su propio riesgo. OMEGA Bingo no se hace responsable por cualquier pérdida incurrida.</p>
+            `,
             privacy: `
                 <h2 class="text-xl font-bold text-gray-900 mb-3">Política de Privacidad de OMEGA Bingo</h2>
                 <p class="text-xs text-gray-500 mb-4">Última actualización: 4/12/25</p>
                 
                 <h3 class="font-bold text-lg text-purple-700 mt-4 mb-2">1. Información que Recopilamos</h3>
-                <p>Recopilamos información que usted nos proporciona directamente al registrarse, reservar números y realizar pagos. Esto puede incluir su nombre, dirección de correo electrónico, número de teléfono, detalles de pago y los documentos de verificación (como comprobantes de pago) que nos envíe.</p>
+                <p>Recopilamos información que usted nos proporciona directamente al registrarse y realizar pagos.</p>
                 
-                <h3 class="font-bold text-lg text-purple-700 mt-4 mb-2">2. Uso de la Información y Cumplimiento Legal</h3>
-                <ul class="list-disc list-inside space-y-1 ml-4">
-                    <li>Procesar sus reservas y pagos.</li>
-                    <li>Verificar su identidad y elegibilidad para jugar.</li>
-                    <li>Comunicarnos con usted sobre el estado de su cuenta y premios.</li>
-                    <li>Cumplir con nuestras obligaciones legales y reglamentarias, especialmente las relacionadas con la prevención de fraude y el juego responsable, en las jurisdicciones aplicables (incluyendo Venezuela y EEUU).</li>
-                </ul>
-
-                <h3 class="font-bold text-lg text-purple-700 mt-4 mb-2">3. Almacenamiento y Seguridad de los Datos (Clave de Confianza)</h3>
-                <p>La seguridad de su información personal es nuestra prioridad. Implementamos medidas de seguridad técnicas y organizativas robustas para proteger los datos contra el acceso no autorizado, la alteración, la divulgación o la destrucción.</p>
-                <ul class="list-disc list-inside space-y-1 ml-4">
-                    <li><strong>Alojamiento Seguro:</strong> Todos los datos y documentos de verificación (comprobantes de pago) se almacenan en servidores seguros operados por proveedores de servicios certificados que cumplen con estándares de seguridad reconocidos internacionalmente ISO 27001., que manejan la información de acuerdo a estándares globales.</li>
-                    <li><strong>Cifrado:</strong> Utilizamos el cifrado de datos (SSL/TLS) para proteger la transmisión de datos entre su navegador y nuestros servidores. Los datos almacenados también están sujetos a medidas de cifrado en reposo cuando es posible.</li>
-                    <li><strong>Acceso Restringido:</strong> El acceso a la información personal identificable está estrictamente limitado al personal autorizado de OMEGA Bingo que requiere acceso para realizar sus funciones laborales.</li>
-                    <li><strong>Gestión de Documentos:</strong> Los comprobantes de clientes se almacenan en un sistema de gestión de documentos seguro e interno (Cloudinary privado) y nunca en servicios de alojamiento de archivos públicos o genéricos como MediaFire, Google Drive personal o Dropbox personal.</li>
-                </ul>
-                
-                <h3 class="font-bold text-lg text-purple-700 mt-4 mb-2">4. Retención de Datos</h3>
-                <p>Retenemos su información personal solo durante el tiempo necesario para cumplir con los fines para los que fue recopilada, incluyendo cualquier período de retención legal o reglamentario requerido por las autoridades de licencias de juego y fiscales.</p>
-                `
+                <h3 class="font-bold text-lg text-purple-700 mt-4 mb-2">2. Uso de la Información</h3>
+                <p>La información se utiliza para procesar sus reservas y pagos de manera segura.</p>
+            `
         };
 
         function showLegalModal(type) {
@@ -1306,8 +1603,6 @@
             } else if (type === 'privacy') {
                 title.textContent = 'Política de Privacidad';
                 body.innerHTML = legalContent.privacy;
-            } else {
-                return;
             }
             
             modal.style.display = 'flex';
